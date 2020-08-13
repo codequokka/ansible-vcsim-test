@@ -1,2 +1,3 @@
 # Python
 /.venv/
+/roles/sky_joker.ansible_vmware_govcsim_provisioner/

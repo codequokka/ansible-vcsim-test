@@ -1,6 +1,6 @@
 ---
 - name:  vcsim provisioning playbook
-  hosts:  localhost
+  hosts:  vcsim
   gather_facts:  no
   roles:
     - sky_joker.ansible_vmware_govcsim_provisioner

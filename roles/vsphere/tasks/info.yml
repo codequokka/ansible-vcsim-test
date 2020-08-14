@@ -1,0 +1,6 @@
+---
+# - import_tasks: info/vmware_about_info.yml
+# - import_tasks: info/vmware_cluster_info.yml
+# - import_tasks: info/vmware_folder_info.yml
+# - import_tasks: info/vmware_host_facts.yml
+# - import_tasks: info/vmware_guest_info.yml

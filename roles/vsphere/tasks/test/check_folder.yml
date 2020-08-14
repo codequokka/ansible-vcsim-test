@@ -1,0 +1,14 @@
+---
+- name: Get vCenter folders information
+  vmware_folder_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    validate_certs: no
+  register: _vmware_folder_info
+
+- name: Check vm folder exists
+  assert:
+    that: _vmware_folder_info.folder_info.vmFolders.subfolders.{{ vcenter.datacenter.folder.vm }}
+    success_msg: "Folder: {{ vcenter.datacenter.folder.vm }} exists"

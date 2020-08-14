@@ -1,0 +1,7 @@
+---
+- import_tasks: deploy/create_datacenter.yml
+# - import_tasks: deploy/create_cluster.yml
+# - import_tasks: deploy/create_folder.yml
+# - import_tasks: deploy/add_esxi_servers.yml
+# - import_tasks: deploy/deploy_vm_from_ovf.yml
+# - import_tasks: deploy/create_vm_from_template.yml

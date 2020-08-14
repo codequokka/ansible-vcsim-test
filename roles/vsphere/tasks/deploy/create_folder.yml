@@ -1,0 +1,11 @@
+---
+- name: Create a vm folder
+  vcenter_folder:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter_name: "{{ vcenter.datacenter.name }}"
+    folder_name: "{{ vcenter.datacenter.folder.vm }}"
+    folder_type: vm
+    validate_certs: no
+    state: present

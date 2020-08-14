@@ -1,0 +1,14 @@
+---
+- name: Get cluster information
+  vmware_cluster_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    cluster_name: "{{ vcenter.cluster.name }}"
+    validate_certs: no
+  register: _vmaware_cluster_info
+
+- name: Show cluster information
+  debug:
+    msg: "{{ _vmaware_cluster_info }}"

@@ -1,0 +1,31 @@
+---
+- name: Get vm_templates information
+  vmware_guest_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    name: "{{ vm_template.name }}"
+    schema: "vsphere"
+    validate_certs: no
+  register: _vmware_guest_info
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+- name: Make a list of vm_template's name
+  set_fact:
+    vm_template_names: "{{ vm_templates | map(attribute='name') | list }}"
+
+- name: Check vm_templates exist
+  assert:
+    # Use "in" expression to avoid nested loop
+    that: "'{{ vmware_guest_info.instance.summary.config.name }}' in vm_template_names"
+    success_msg: "VM template: {{ vmware_guest_info.instance.summary.config.name }} exists"
+  loop: "{{ _vmware_guest_info.results }}"
+  loop_control:
+    loop_var: vmware_guest_info
+
+- name: Check vm_templates more
+  debug:
+    msg: "[Pending] Implementing tasks to check vm_templates more"

@@ -1,0 +1,15 @@
+---
+- name: Get cluster information
+  vmware_cluster_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    cluster_name: "{{ vcenter.cluster.name }}"
+    validate_certs: no
+  register: _vmware_cluster_info
+
+- name: Check cluster exists
+  assert:
+    that: _vmware_cluster_info.clusters.{{ vcenter.cluster.name }}
+    success_msg: "Cluster: {{ vcenter.cluster.name }} exists"

@@ -1,0 +1,44 @@
+---
+- name: Get VMs information
+  vmware_guest_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    name: "{{ vm.name }}"
+    schema: "vsphere"
+    validate_certs: no
+  register: _vmware_guest_info
+  loop: "{{ vms }}"
+  loop_control:
+    loop_var: vm
+
+- name: Make a list of vm's name
+  set_fact:
+    vm_names: "{{ vms | map(attribute='name') | list }}"
+
+- name: Check vm_templates exist
+  assert:
+    # Use "in" expression to avoid nested loop
+    that: "'{{ vmware_guest_info.instance.summary.config.name }}' in vm_names"
+    success_msg: "VM: {{ vmware_guest_info.instance.summary.config.name }} exists"
+  loop: "{{ _vmware_guest_info.results }}"
+  loop_control:
+    loop_var: vmware_guest_info
+
+# - name: Get VMs information
+#   command: >-
+#     govc ls
+#       /{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}/{{ vm.name }}
+#   environment:
+#     GOVC_URL: "{{ vcenter.hostname }}"
+#     GOVC_USERNAME: "{{ vcenter.username }}"
+#     GOVC_PASSWORD: "{{ vcenter.password }}"
+#     GOVC_INSECURE: true
+#   loop: "{{ vms }}"
+#   loop_control:
+#     loop_var: vm
+
+- name: Check VMs more
+  debug:
+    msg: "[Pending] Implementing tasks to check VMs more"

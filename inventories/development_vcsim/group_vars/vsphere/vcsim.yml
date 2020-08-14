@@ -1,0 +1,17 @@
+---
+# govcsim container params.
+# please choices 'started' or 'absent' for the state.
+govcsim_image: quay.io/ansible/vcenter-test-container:latest
+state: started
+
+# govcsim params.
+app: 0
+cluster: 0
+dc: 0
+ds: 0
+folder: 0
+host: 0
+pg: 0
+pod: 0
+pool: 0
+vm: 0

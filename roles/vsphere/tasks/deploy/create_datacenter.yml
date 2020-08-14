@@ -1,0 +1,9 @@
+---
+- name: Create datacenter
+  vmware_datacenter:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter_name: "{{ vcenter.datacenter.name }}"
+    validate_certs: no
+    state: present

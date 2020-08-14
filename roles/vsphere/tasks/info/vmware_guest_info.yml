@@ -1,0 +1,18 @@
+---
+- name: Get vm_templates information
+  vmware_guest_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    name: "{{ vm_template.name }}"
+    schema: "vsphere"
+    validate_certs: no
+  register: _vmware_guest_info
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+- name: Show vm_templates information
+  debug:
+    msg: "{{ _vmware_guest_info }}"

@@ -1,0 +1,13 @@
+---
+- name: Get vCenter folders information
+  vmware_folder_info:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    validate_certs: no
+  register: _vmware_folder_info
+
+- name: Show vCenter folders information
+  debug:
+    msg: "{{ _vmware_folder_info }}"

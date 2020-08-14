@@ -1,0 +1,9 @@
+---
+- import_tasks: deploy.yml
+  tags: deploy
+
+- import_tasks: test.yml
+  tags: test
+ 
+# - import_tasks: info.yml
+#   tags: info

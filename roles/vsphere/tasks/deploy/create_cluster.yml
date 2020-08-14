@@ -1,0 +1,10 @@
+---
+- name: Create cluster
+  vmware_cluster:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter_name: "{{ vcenter.datacenter.name }}"
+    cluster_name: "{{ vcenter.cluster.name }}"
+    validate_certs: no
+    state: present

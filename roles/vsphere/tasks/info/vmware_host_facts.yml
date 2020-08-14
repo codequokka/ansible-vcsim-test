@@ -1,0 +1,16 @@
+---
+- name: Get ESXi servers information
+  vmware_host_facts:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    validate_certs: no
+  register: _vmware_host_facts
+  loop: "{{ esxi.hostnames }}"
+  loop_control:
+    loop_var: esxi_hostname
+
+- name: Show ESXi server information
+  debug:
+    msg: "{{ _vmware_host_facts }}"

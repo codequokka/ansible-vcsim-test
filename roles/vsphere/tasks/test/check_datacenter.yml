@@ -1,0 +1,10 @@
+---
+- name: Get datacenter info
+  command: govc datacenter.info --json {{ vcenter.datacenter.name }}
+  changed_when: no
+  register: _govc_datacenter_info
+  
+- name: Check datacenter exists
+  assert:
+    that: _govc_datacenter_info.rc == 0
+    success_msg: "Datacenter: {{ vcenter.datacenter.name }} exists"

@@ -1,0 +1,14 @@
+---
+- name: Get about info
+  command: govc about
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  register: _govc_about_info
+
+- name: Show about info
+  debug:
+    msg: "{{ _govc_about_info.stdout_lines }}"

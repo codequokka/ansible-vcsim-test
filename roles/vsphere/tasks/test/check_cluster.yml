@@ -1,15 +1,17 @@
 ---
-- name: Get cluster information
-  vmware_cluster_info:
-    hostname: "{{ vcenter.hostname }}"
-    username: "{{ vcenter.username }}"
-    password: "{{ vcenter.password }}"
-    datacenter: "{{ vcenter.datacenter.name }}"
-    cluster_name: "{{ vcenter.cluster.name }}"
-    validate_certs: no
-  register: _vmware_cluster_info
+- name: Get cluster info
+  command: |
+    govc find
+      -type=ClusterComputeResource /{{ vcenter.datacenter.name }}/host/{{ vcenter.cluster.name }}
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  register: _govc_cluster_info
 
 - name: Check cluster exists
   assert:
-    that: _vmware_cluster_info.clusters.{{ vcenter.cluster.name }}
+    that: _govc_cluster_info.rc == 0
     success_msg: "Cluster: {{ vcenter.cluster.name }} exists"

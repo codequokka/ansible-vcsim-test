@@ -1,9 +1,10 @@
 ---
-- name: Add ESXi servers to vCenter
+- name: Add esxi servers to vcenter
   vmware_host:
     hostname: "{{ vcenter.hostname }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
+    port: "{{ vcenter.port }}"
     datacenter: "{{ vcenter.datacenter.name }}"
     cluster_name: "{{ vcenter.cluster.name }}"
     esxi_hostname: "{{ esxi_hostname }}"

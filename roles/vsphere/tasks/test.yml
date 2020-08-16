@@ -4,6 +4,6 @@
 - import_tasks: test/check_datacenter.yml
 - import_tasks: test/check_cluster.yml
 - import_tasks: test/check_vm_folder.yml
-# - import_tasks: test/check_esxi_servers.yml
+- import_tasks: test/check_esxi_servers.yml
 # - import_tasks: test/check_vm_templates.yml
 # - import_tasks: test/check_vms.yml

@@ -3,6 +3,7 @@
     hostname: "{{ vcenter.hostname }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
+    port: "{{ vcenter.port }}"
     datacenter: "{{ vcenter.datacenter.name }}"
     folder: "/{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"

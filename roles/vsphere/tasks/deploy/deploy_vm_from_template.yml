@@ -1,0 +1,65 @@
+- name: Deploy master vms from vm templates
+  vmware_guest:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    port: "{{ vcenter.port }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    folder: "/{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}"
+    esxi_hostname: "{{ vm.esxi_hostname }}"
+    name: "{{ vm.name }}"
+    state: present
+    template: "{{ vm_specs.master.template }}"
+    disk: "{{ vm.disk }}"
+    # disk: "{{ vm_specs.master.disk }}"
+    hardware: "{{ vm_specs.master.hardware }}"
+    networks: "{{ vm.networks }}"
+    validate_certs: no
+  loop: "{{ vms }}"
+  loop_control:
+    loop_var: vm
+  when: vm.name | regex_search('^master')
+
+- name: Deploy infra vms from vm templates
+  vmware_guest:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    port: "{{ vcenter.port }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    folder: "/{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}"
+    esxi_hostname: "{{ vm.esxi_hostname }}"
+    name: "{{ vm.name }}"
+    state: present
+    template: "{{ vm_specs.infra.template }}"
+    disk: "{{ vm.disk }}"
+    # disk: "{{ vm_specs.infra.disk }}"
+    hardware: "{{ vm_specs.infra.hardware }}"
+    networks: "{{ vm.networks }}"
+    validate_certs: no
+  loop: "{{ vms }}"
+  loop_control:
+    loop_var: vm
+  when: vm.name | regex_search('^infra')
+
+- name: Deploy worker vms from vm templates
+  vmware_guest:
+    hostname: "{{ vcenter.hostname }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    port: "{{ vcenter.port }}"
+    datacenter: "{{ vcenter.datacenter.name }}"
+    folder: "/{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}"
+    esxi_hostname: "{{ vm.esxi_hostname }}"
+    name: "{{ vm.name }}"
+    state: present
+    template: "{{ vm_specs.worker.template }}"
+    disk: "{{ vm.disk }}"
+    # disk: "{{ vm_specs.worker.disk }}"
+    hardware: "{{ vm_specs.worker.hardware }}"
+    networks: "{{ vm.networks }}"
+    validate_certs: no
+  loop: "{{ vms }}"
+  loop_control:
+    loop_var: vm
+  when: vm.name | regex_search('^worker')

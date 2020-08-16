@@ -3,3 +3,6 @@
 
 # Ansible
 /roles/sky_joker.ansible_vmware_govcsim_provisioner/
+
+# Openshift
+/repository/rhcos-4.4.3-x86_64-vmware.x86_64.ova

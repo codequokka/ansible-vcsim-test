@@ -1,31 +1,25 @@
 ---
-- name: Get vm_templates information
-  vmware_guest_info:
-    hostname: "{{ vcenter.hostname }}"
-    username: "{{ vcenter.username }}"
-    password: "{{ vcenter.password }}"
-    datacenter: "{{ vcenter.datacenter.name }}"
-    name: "{{ vm_template.name }}"
-    schema: "vsphere"
-    validate_certs: no
-  register: _vmware_guest_info
-  loop: "{{ vm_templates }}"
-  loop_control:
-    loop_var: vm_template
+- name: Get vm templates info
+  command: |
+    govc find -type VirtualMachine
+      /{{ vcenter.datacenter.name }}/vm/{{ vcenter.datacenter.folder.vm }}
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  register: _govc_vm_templates_info
 
-- name: Make a list of vm_template's name
+- name: Make a list of deployed vm template's name
   set_fact:
-    vm_template_names: "{{ vm_templates | map(attribute='name') | list }}"
+    deployed_vm_template_names: "{{ _govc_vm_templates_info.stdout_lines | map('basename') | list }}"
 
-- name: Check vm_templates exist
+- name: Check vm templates exist
   assert:
-    # Use "in" expression to avoid nested loop
-    that: "'{{ vmware_guest_info.instance.summary.config.name }}' in vm_template_names"
-    success_msg: "VM template: {{ vmware_guest_info.instance.summary.config.name }} exists"
-  loop: "{{ _vmware_guest_info.results }}"
+    # Use "in" operator to avoid nested loop
+    that: "'{{ vm_template_name }}' in deployed_vm_template_names"
+    success_msg: "Vm template: {{ vm_template_name }} exists"
+  loop: "{{ vm_templates | map(attribute='name') | list }}"
   loop_control:
-    loop_var: vmware_guest_info
-
-- name: Check vm_templates more
-  debug:
-    msg: "[Pending] Implementing tasks to check vm_templates more"
+    loop_var: vm_template_name

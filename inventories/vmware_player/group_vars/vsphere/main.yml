@@ -22,7 +22,7 @@ esxi:
 vm_templates:
   - name: OpenShift4_rhcos-4.4.3
     ovf: /home/nbchk/work/vsphere/ansible-vsphere-poc/repository/rhcos-4.4.3-x86_64-vmware.x86_64.ova
-    datastore: datastore1 (1)
+    datastore: datastore1
     networks:
       VM Network: VM Network
   - name: OpenShift4_rhcos-4.4.3_2
